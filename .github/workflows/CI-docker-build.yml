@@ -26,10 +26,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Tag backend image
-        run: docker tag backend:latest mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest
+        run: docker tag crud-dd-task-mean-app-backend:latest mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest
 
       - name: Tag frontend image
-        run: docker tag frontend:latest mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest
+        run: docker tag crud-dd-task-mean-app-frontend:latest mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest
 
       - name: Push backend image
         run: docker push mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest

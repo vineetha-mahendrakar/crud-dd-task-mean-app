@@ -1,0 +1,51 @@
+name: Deploy to GCP VM
+
+on:
+  workflow_run:
+    workflows: ["Build Docker Images & Push to Docker Hub"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
+
+      - name: Check and install Docker on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "if ! command -v docker &> /dev/null; then curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && sudo usermod -aG docker $USER; fi"
+
+      - name: Docker login on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "echo '${{ secrets.DOCKERHUB_TOKEN }}' | docker login -u '${{ secrets.DOCKERHUB_USERNAME }}' --password-stdin"
+
+      - name: Pull backend image on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker pull mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest"
+
+      - name: Pull frontend image on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker pull mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
+
+      - name: Stop and remove backend container on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker stop backend || true && docker rm backend || true"
+
+      - name: Run backend container on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker run -d --name backend -p 8081:8081 -e MONGO_URL=mongodb://mongo:27017/dd_db mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest"
+
+      - name: Stop and remove frontend container on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker stop frontend || true && docker rm frontend || true"
+
+      - name: Run frontend container on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker run -d --name frontend -p 80:80 mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"

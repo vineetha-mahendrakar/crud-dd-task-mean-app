@@ -40,7 +40,11 @@ jobs:
 
       - name: Run mongo container on GCP VM
         run: |
+<<<<<<< HEAD
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker run -d --name mongo --network crud-net -p 27017:27017 -v mongo-data:/data/db mongo:6.0"
+=======
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker run -d --name mongo -p 27017:27017 -v mongo-data:/data/db mongo:6.0"
+>>>>>>> 955055e722546d881b5524ab5495e8f4a1007652
       
       - name: Stop and remove backend container on GCP VM
         run: |

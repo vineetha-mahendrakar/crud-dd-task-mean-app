@@ -1,27 +1,72 @@
-In this DevOps task, you need to build and deploy a full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular 15, and Node.js). The backend will be developed with Node.js and Express to provide REST APIs, connecting to a MongoDB database. The frontend will be an Angular application utilizing HTTPClient for communication.  
+# MEAN Stack DevOps Assignment
 
-The application will manage a collection of tutorials, where each tutorial includes an ID, title, description, and published status. Users will be able to create, retrieve, update, and delete tutorials. Additionally, a search box will allow users to find tutorials by title.
+## Problem Statement
 
-## Project setup
+Build and deploy a full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular, Node.js). The app manages tutorials (ID, title, description, published status) with full CRUD and search functionality.
 
-### Node.js Server
+## Solution Overview
 
-cd backend
+- **Frontend:** Angular (HTTPClient)
+- **Backend:** Node.js + Express (REST API)
+- **Database:** MongoDB
+- **Containerization:** Docker for frontend, backend, and MongoDB
+- **Orchestration:** Docker Compose
+- **CI/CD:** GitHub Actions (build, push images, deploy to VM)
+- **Reverse Proxy:** Nginx (port 80)
 
-npm install
+## Repository Structure
 
-You can update the MongoDB credentials by modifying the `db.config.js` file located in `app/config/`.
+- `frontend/` – Angular client
+- `backend/` – Node.js/Express API
+- `docker-compose.yaml` – Multi-container orchestration
+- `.github/workflows/` – CI/CD pipelines
 
-Run `node server.js`
+## Setup & Deployment Instructions
 
-### Angular Client
+1. **Clone the Repository**
+	```sh
+	git clone [YOUR_GITHUB_REPO_URL]
+	cd crud-dd-task-mean-app
+	```
+2. **Configure Environment**
+	- Update MongoDB credentials in `backend/app/config/db.config.js` if needed.
+	- Update Docker image names and secrets as required.
+3. **Build & Run with Docker Compose**
+	```sh
+	docker-compose up --build
+	```
+4. **Access the Application**
+	- Frontend: http://[VM_PUBLIC_IP]/
+	- Backend API: http://[VM_PUBLIC_IP]:8081/api/tutorials
+5. **CI/CD Pipeline**
+	- On push, GitHub Actions build and push Docker images to Docker Hub, then deploys to VM via SSH.
+6. **Nginx**
+	- Proxies all traffic to the frontend/backend, exposed on port 80.
 
-cd frontend
+## Infrastructure Details
 
-npm install
+- Cloud: GCP
+- Docker Compose manages all services
+- Nginx reverse proxy on port 80
 
-Run `ng serve --port 8081`
+## Deliverables
 
-You can modify the `src/app/services/tutorial.service.ts` file to adjust how the frontend interacts with the backend.
+- GitHub repository: [crud-dd-task-mean-app](https://github.com/vineetha-mahendrakar/crud-dd-task-mean-app)
+- Docker Hub images: 
+    - [Frontend](https://hub.docker.com/r/mahendrakarvineethabai/crud-dd-task-mean-app-frontend)
+    - [Backend](https://hub.docker.com/r/mahendrakarvineethabai/crud-dd-task-mean-app-backend)
 
-Navigate to `http://localhost:8081/`
+- Screenshots:
+  - CI/CD pipeline execution
+  - Docker image build & push
+  - Application UI in browser
+  - Nginx setup and running containers
+
+- Submission form: https://forms.office.com/r/f8Lfvm7BCL
+
+
+## Submission
+- **GitHub Repo:** https://github.com/vineetha-mahendrakar/crud-dd-task-mean-app
+- **Submission Form:** https://forms.office.com/r/f8Lfvm7BCL
+
+---

@@ -33,7 +33,15 @@ jobs:
       - name: Pull frontend image on GCP VM
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker pull mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
+      
+      - name: Stop and remove mongo container on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker stop mongo || true && sudo docker rm mongo || true"
 
+      - name: Run mongo container on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker run -d --name mongo -p 27017:27017 -v mongo-data:/data/db mongo:6.0"
+      
       - name: Stop and remove backend container on GCP VM
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker stop backend || true && sudo docker rm backend || true"

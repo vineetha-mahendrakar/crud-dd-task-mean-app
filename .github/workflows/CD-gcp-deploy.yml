@@ -1,8 +1,8 @@
-name: Deploy to GCP VM
+name: CD-Deploy to GCP VM
 
 on:
   workflow_run:
-    workflows: ["Build Docker Images & Push to Docker Hub"]
+    workflows: ["CI-Build Docker Images & Push to Docker Hub"]
     types:
       - completed
 

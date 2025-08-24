@@ -34,6 +34,11 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker pull mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
       
+
+      - name: Create Docker network on GCP VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker network inspect crud-net >/dev/null 2>&1 || sudo docker network create crud-net"
+
       - name: Stop and remove mongo container on GCP VM
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker stop mongo || true && sudo docker rm mongo || true"

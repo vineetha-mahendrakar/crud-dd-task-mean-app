@@ -69,11 +69,19 @@ Build and deploy a full-stack CRUD application using the MEAN stack (MongoDB, Ex
 		- [Frontend](https://hub.docker.com/r/mahendrakarvineethabai/crud-dd-task-mean-app-frontend)
 		- [Backend](https://hub.docker.com/r/mahendrakarvineethabai/crud-dd-task-mean-app-backend)
 
-- 🖼️ Screenshots:
-	- 🔄 CI/CD pipeline execution
-	- 🐳 Docker image build & push
-	- 🌐 Application UI in browser
-	- 🛡️ Nginx setup and running containers
+🖼️ **Screenshots:**
+
+🔄 **CI/CD pipeline execution:**
+<img src="screenshots/ci-cd-execution.png" alt="CI/CD pipeline execution" width="600" />
+
+🐳 **Docker containers running:**
+<img src="screenshots/docker-containers-running.png" alt="Docker containers running" width="600" />
+
+🌐 **Application UI in browser:**
+<img src="screenshots/app-ui.png" alt="Application UI" width="600" />
+
+✏️ **Edit Tutorial UI:**
+<img src="screenshots/app-ui-edit-tutorial.png" alt="Edit Tutorial UI" width="600" />
 
 - 📝 Submission form: https://forms.office.com/r/f8Lfvm7BCL
 

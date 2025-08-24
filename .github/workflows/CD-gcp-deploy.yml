@@ -28,24 +28,24 @@ jobs:
 
       - name: Pull backend image on GCP VM
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker pull mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker pull mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest"
 
       - name: Pull frontend image on GCP VM
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker pull mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker pull mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
 
       - name: Stop and remove backend container on GCP VM
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker stop backend || true && docker rm backend || true"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker stop backend || true && sudo docker rm backend || true"
 
       - name: Run backend container on GCP VM
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker run -d --name backend -p 8081:8081 -e MONGO_URL=mongodb://mongo:27017/dd_db mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker run -d --name backend -p 8081:8081 -e MONGO_URL=mongodb://mongo:27017/dd_db mahendrakarvineethabai/crud-dd-task-mean-app-backend:latest"
 
       - name: Stop and remove frontend container on GCP VM
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker stop frontend || true && docker rm frontend || true"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker stop frontend || true && sudo docker rm frontend || true"
 
       - name: Run frontend container on GCP VM
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "docker run -d --name frontend -p 80:80 mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_SSH_USER }}@${{ secrets.GCP_VM_IP }} "sudo docker run -d --name frontend -p 80:80 mahendrakarvineethabai/crud-dd-task-mean-app-frontend:latest"
